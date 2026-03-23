@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct CoopDukaAssessmentApp: App {
-    @AppStorage("isLoggedIn") var isLoggedIn: Bool = true
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     
     private let remoteLoader: RemoteProductLoader
     private let viewModel: ProductViewModel
