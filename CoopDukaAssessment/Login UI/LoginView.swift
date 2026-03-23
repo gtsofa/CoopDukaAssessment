@@ -9,8 +9,10 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var vm = LoginViewModel()
-    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
+    @State private var username = ""
+    @State private var password = ""
     
+    var didLogin: (Credentials) -> Void
     
     var body: some View {
 
@@ -52,7 +54,7 @@ struct LoginView: View {
             
             Button(action: {
                 print("Login btn clicked")
-                isLoggedIn = true
+                didLogin(Credentials(username: username, password: password))
                 
             }) {
                 Text("Login")
@@ -68,8 +70,4 @@ struct LoginView: View {
         .padding()
         
     }
-}
-
-#Preview {
-    LoginView()
 }

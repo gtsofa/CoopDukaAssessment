@@ -15,7 +15,7 @@ struct CoopDukaAssessmentApp: App {
     private let viewModel: ProductViewModel
     
     init() {
-        let url = URL(string: "https://jsonplaceholder.typicode.com")!
+        let url = URL(string: "https://jsonplaceholder.typicode.com/posts")!
         let client = URLSessionHTTPClient()
         let loader = RemoteProductLoader(url: url, client: client)
         
@@ -30,7 +30,11 @@ struct CoopDukaAssessmentApp: App {
                     ProductsView(viewModel: viewModel)
                 }
             } else {
-                LoginView()
+                LoginView(didLogin: { credentials in
+                    if credentials.username == "admin" && credentials.password == "admin" {
+                        isLoggedIn = true
+                    }
+                })
             }
         }
     }
