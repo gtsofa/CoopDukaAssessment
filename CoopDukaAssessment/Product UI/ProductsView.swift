@@ -14,7 +14,6 @@ struct ProductsView: View {
         VStack(spacing: 12) {
             if viewModel.isLoading {
                 ProgressView()
-                    .padding(.top, 8)
             }
             
             if let error = viewModel.errorMessage {
@@ -22,9 +21,16 @@ struct ProductsView: View {
                     .foregroundColor(.red)
             }
             
-            List(viewModel.products, id: \.id) { product in
-                productRow(product)
+            if viewModel.products.isEmpty && !viewModel.isLoading {
+                Text("Something went wrong. Check back later.")
+            } else {
+                List(viewModel.products, id: \.id) { product in
+                    productRow(product)
+                }
             }
+        }
+        .onAppear {
+            viewModel.loadProducts()
         }
     }
     
