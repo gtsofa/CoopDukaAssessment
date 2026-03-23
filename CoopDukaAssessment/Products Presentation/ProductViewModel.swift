@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 @MainActor
-class ProductViewModel {
+class ProductViewModel: ObservableObject {
     @Published private(set) var products = [ProductItem]()
     @Published var isLoading = false
     @Published var errorMessage: String?
@@ -20,16 +20,22 @@ class ProductViewModel {
     }
     
     func loadProducts() {
+        isLoading = true
+        errorMessage = nil
+        
         loader.load() { [weak self] result in
             guard let self else { return }
-            self.isLoading = false
             
-            switch result {
-            case let .success(items):
-                self.products = items
-            case let .failure(error):
-                self.products = []
-                self.errorMessage = error.localizedDescription
+            DispatchQueue.main.async {
+                self.isLoading = false
+                
+                switch result {
+                case let .success(items):
+                    self.products = items
+                case let .failure(error):
+                    self.products = []
+                    self.errorMessage = error.localizedDescription
+                }
             }
             
         }

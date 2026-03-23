@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var vm = LoginViewModel()
+    //@AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     var body: some View {
 
         VStack {
@@ -49,6 +50,7 @@ struct LoginView: View {
             
             Button(action: {
                 print("Login btn clicked")
+                //isLoggedIn = true
                 
             }) {
                 Text("Login")
